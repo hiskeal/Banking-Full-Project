@@ -1,0 +1,34 @@
+package com.usa.payment.Dto;
+
+
+import java.time.Instant;
+import java.util.Date;
+import javax.persistence.Column;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class PersonResponseDto {
+    private Long id;
+
+    private String firstName;
+
+    private String middleName;
+
+    private String lastName;
+
+    private int age;
+
+    private String department;
+
+    private Date dateOfBirth;
+
+    private String address;
+
+    private String email;
+
+    private Long phoneNumber;
+}
