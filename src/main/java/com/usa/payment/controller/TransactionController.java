@@ -2,6 +2,8 @@ package com.usa.payment.controller;
 
 import com.usa.payment.Dto.ResponseDto;
 import com.usa.payment.Dto.TransactionRequestDto;
+import com.usa.payment.Dto.WithdrawRequestDto;
+import com.usa.payment.Dto.WithdrawResponseDto;
 import com.usa.payment.model.Transaction;
 import com.usa.payment.model.Transfer;
 import com.usa.payment.service.TransactionService;
@@ -18,10 +20,10 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-    @PostMapping("/saveTransaction")
-    public ResponseDto saveTransaction(@RequestBody TransactionRequestDto transactionRequestDto) {
-        return  transactionService.saveTransaction(transactionRequestDto);
 
+    @PostMapping("/saveTransaction")
+    public Transaction saveTransaction(@RequestBody WithdrawRequestDto withdrawRequestDto) {
+        return transactionService.withdrawTransaction(withdrawRequestDto);
     }
 
     @PutMapping("/updateTransaction/{id}")

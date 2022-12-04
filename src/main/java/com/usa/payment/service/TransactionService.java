@@ -1,15 +1,21 @@
 package com.usa.payment.service;
 
 
-import com.usa.payment.Dto.ResponseDto;
-import com.usa.payment.Dto.TransactionRequestDto;
-import com.usa.payment.Dto.TransactionResponseDto;
+import com.usa.payment.Dto.*;
+import com.usa.payment.model.Account;
 import com.usa.payment.model.Transaction;
-import com.usa.payment.model.Transfer;
+import com.usa.payment.model.TransactionCategory;
+import com.usa.payment.model.TransactionType;
+
+import com.usa.payment.repository.AccountRepository;
+import com.usa.payment.repository.TransactionCategoryRepository;
 import com.usa.payment.repository.TransactionRepository;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+
+import com.usa.payment.repository.TransactionTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,17 +25,55 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    public ResponseDto saveTransaction(TransactionRequestDto transactionRequestDto) {
+    @Autowired
+    private TransactionTypeRepository transactionTypeRepository;
+
+    @Autowired
+    private TransactionCategoryRepository transactionCategoryRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
+
+    public Transaction withdrawTransaction(WithdrawRequestDto withdrawRequestDto) {
 
         Transaction transaction = new Transaction();
 
-        transaction.setTransactionAmount(transactionRequestDto.getTransactionAmount());
-        transaction.setTransactionCode(transactionRequestDto.getTransactionCode());
         transaction.setCreatedOn(new Date());
-        transaction.setUpdatedOn(new Date());
+        // Transaction Type & Withdraw are saved on both way
+        TransactionType transactionType = transactionTypeRepository.findById(5L).get();
+        transaction.setTransactionType(transactionType);
 
-        transactionRepository.save(transaction);
-        return new ResponseDto(true, "Transaction fully ");
+        String uuid = UUID.randomUUID().toString(); // Generated
+        transaction.setTransactionAmount(withdrawRequestDto.getWithdrawAmount());
+        transaction.setTransactionCode(uuid);
+
+        TransactionCategory transactionCategory = transactionCategoryRepository.findById(6L).get();
+        transaction.setTransactionCategory(transactionCategory);
+
+
+      return transactionRepository.save(transaction);
+
+    }
+
+    public Transaction depositTransaction(DepositRequestDto depositRequestDto) {
+
+        Transaction transaction = new Transaction();
+
+        transaction.setCreatedOn(new Date());
+
+        // Transaction Type & Withdraw are saved on both way
+        TransactionType transactionType = transactionTypeRepository.findById(7L).get();
+
+        transaction.setTransactionType(transactionType);
+        String uuid = UUID.randomUUID().toString();
+        transaction.setTransactionAmount(depositRequestDto.getDepositAmount());
+        transaction.setTransactionCode(uuid);
+
+        TransactionCategory transactionCategory = transactionCategoryRepository.findById(6L).get();
+        transaction.setTransactionCategory(transactionCategory);
+
+        return transactionRepository.save(transaction);
+
     }
 
     public ResponseDto updateTransaction(TransactionRequestDto transactionRequestDto, Long id) {

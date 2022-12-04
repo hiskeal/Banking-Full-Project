@@ -27,6 +27,14 @@ public class Transaction {
     @Column(name = "transaction_code")
     private String transactionCode;
 
+    @ManyToOne
+    @JoinColumn(name = "transaction_category_id")
+    private TransactionCategory transactionCategory;
+
+    @ManyToOne
+    @JoinColumn(name = "transaction_type_id")
+    private TransactionType transactionType;
+
     @Column(name = "updated_on")
     private Date updatedOn;
 

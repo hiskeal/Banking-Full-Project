@@ -18,6 +18,10 @@ public class TransactionRequestDto {
 
     private String transactionCode;
 
+    private Long transactionCategoryId;
+
+    private Long transactionTypeId;
+
     private Date updatedOn;
 
 

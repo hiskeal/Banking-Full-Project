@@ -55,10 +55,10 @@ public class TransferService {
         return new ResponseDto(true,"deleted by id success");
     }
 
-    public ResponseDto deleteTransferById(Transfer transfer, Long id){
-        transferRepository.delete(transfer);
-        return new ResponseDto(true,"deleted by id success");
-    }
+//    public ResponseDto deleteTransferById(Transfer transfer, Long id){
+//        transferRepository.delete(transfer);
+//        return new ResponseDto(true,"deleted by id success");
+//    }
 
     public Transfer getTransferById(Long id){
       return transferRepository.findById(id).get();
